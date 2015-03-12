@@ -32,6 +32,7 @@ import groovy.transform.CompileStatic
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.grails.compiler.web.ControllerActionTransformer
 import org.grails.core.artefact.DomainClassArtefactHandler
+import org.grails.core.artefact.AnnotationDomainClassArtefactHandler
 import org.grails.plugins.web.api.MimeTypesApiSupport
 import org.grails.plugins.web.controllers.ControllerExceptionHandlerMetaData
 import org.grails.plugins.web.servlet.mvc.InvalidResponseHandler
@@ -354,7 +355,7 @@ trait Controller implements ResponseRenderer, ResponseRedirector, RequestForward
                     commandObjectParameterName, dataBindingSource)
             def entityIdentifierValue = null
             final boolean isDomainClass = DomainClassArtefactHandler
-                    .isDomainClass(type)
+                    .isDomainClass(type)||AnnotationDomainClassArtefactHandler.isJPADomainClass(type)
             if (isDomainClass) {
                 entityIdentifierValue = commandObjectBindingSource
                         .getIdentifierValue()
